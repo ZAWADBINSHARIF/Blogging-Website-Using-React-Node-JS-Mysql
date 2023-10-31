@@ -23,14 +23,16 @@ const Navbar = () => {
   return (
     <nav>
       <div className="container">
-        <div className="logo">
-          <img src={Logo} alt="Logo" />
-        </div>
+        <Link to="/">
+          <div className="logo">
+            <img src={Logo} alt="Logo" />
+          </div>
+        </Link>
         <div className="links">
-          <Link className="link" to="/?cat=art">
+          <Link className="link" to="/?cat=Art">
             <h6>ART</h6>
           </Link>
-          <Link className="link" to="/?cat=science">
+          <Link className="link" to="/?cat=Science">
             <h6>SCIENCE</h6>
           </Link>
           <Link className="link" to="/?cat=Technology">
