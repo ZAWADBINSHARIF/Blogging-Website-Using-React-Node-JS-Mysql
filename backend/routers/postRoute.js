@@ -1,12 +1,12 @@
 // external import
-import express from 'express'
+import express from 'express';
 
 // internal import
-import { getPosts, getSinglePost } from '../controllers/postController.js'
+import { getPosts, getSinglePost } from '../controllers/postController.js';
 
-const router = express.Router()
+const router = express.Router();
 
-router.get('/posts', getPosts)
-router.get('/post/:id', getSinglePost)
+router.get('/posts', getPosts);
+router.get('/post/:id', getSinglePost);
 
-export default router
+export default router;

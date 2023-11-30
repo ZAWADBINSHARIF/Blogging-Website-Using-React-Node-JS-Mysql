@@ -1,31 +1,31 @@
 // external import
-import { useEffect, useState } from "react"
-import { Link, useLocation } from "react-router-dom"
-import axios from "axios"
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Home = () => {
 
-  const [posts, setPosts] = useState([])
-  const {search} = useLocation()
-  console.log(`/posts/${search}`)
+  const [posts, setPosts] = useState([]);
+  const { search } = useLocation();
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await axios.get(`/posts/${search}`)
-        setPosts(response.data)
+        const response = await axios.get(`/posts/${search}`);
+        setPosts(response.data);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
 
-    fetchPosts()
+    fetchPosts();
 
-  }, [search])
+  }, [search]);
 
   return (
     <div className="home">
       <div className="posts">
+
         {posts.map(post => (
           <div className="post" key={post.id}>
             <div className="img">
@@ -42,8 +42,9 @@ const Home = () => {
             </div>
           </div>
         ))}
+
       </div>
     </div>
-  )
-}
-export default Home
+  );
+};
+export default Home;
