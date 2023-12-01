@@ -1,4 +1,5 @@
 // external import
+import jwt from "jsonwebtoken";
 
 // internal import
 import { db } from "../config/dbConnection.js";
@@ -18,7 +19,7 @@ export function getPosts(req, res) {
 }
 
 // @desc Get Single Post
-// route GET /api/post
+// route GET /api/post/:id
 // @access Public
 export function getSinglePost(req, res) {
     const { id: postID } = req.params;
@@ -30,4 +31,28 @@ export function getSinglePost(req, res) {
 
         return res.status(200).json(data[0]);
     });
+}
+
+// @desc Delete Single Post
+// route DELETE /api/post/:id
+// @access protected
+export function deleteSinglePost(req, res) {
+    const token = req.cookies.access_token;
+    if (!token) return res.status(401).json("Not authenticated");
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, userInfo) => {
+        if (err) return res.status(403).json('Token is not valid');
+
+        const postId = req.params.id;
+        const sql = `DELETE FROM posts WHERE id = ? AND user_id = ?`;
+
+        db.query(sql, [postId, userInfo.id], (err, data) => {
+            console.log(postId + " " + userInfo.id);
+            console.log(data);
+            if (err) return res.status(403).json('You can delete only your own post');
+
+            return res.status(200).json('Post has been deleted');
+        });
+    });
+
 }
