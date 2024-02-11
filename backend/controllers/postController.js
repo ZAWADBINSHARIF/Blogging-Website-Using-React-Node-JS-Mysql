@@ -33,6 +33,13 @@ export function getSinglePost(req, res) {
     });
 }
 
+// @desc Post a  Single Post
+// route POST /api/post
+// @access protected
+export function uploadPost() {
+
+}
+
 // @desc Delete Single Post
 // route DELETE /api/post/:id
 // @access protected
