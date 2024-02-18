@@ -36,7 +36,27 @@ export function getSinglePost(req, res) {
 // @desc Post a  Single Post
 // route POST /api/post
 // @access protected
-export function uploadPost() {
+export function uploadPost(req, res) {
+
+    const { title, desc, img, category, date } = req.body;
+    const user_id = req.userInfo.id;
+
+    // console.log(title, desc, img, category, date, user_id)
+
+    // add post
+
+    const sql = "INSERT INTO posts (`title`, `desc`, `img`, `category`, `date`, `user_id`) VALUES (?, ?, ?, ?, ?, ?);";
+
+    db.query(sql, [title, desc, img, category, date, user_id], (err, data) => {
+        if(err) console.log(err)
+        if (err) return res.status(403).json(`${err}`);
+
+        console.log(data);
+
+        // console.log(req.userInfo);
+        console.log(req.body);
+        res.json(req.body);
+    });
 
 }
 
@@ -54,8 +74,6 @@ export function deleteSinglePost(req, res) {
         const sql = `DELETE FROM posts WHERE id = ? AND user_id = ?`;
 
         db.query(sql, [postId, userInfo.id], (err, data) => {
-            console.log(postId + " " + userInfo.id);
-            console.log(data);
             if (err) return res.status(403).json('You can delete only your own post');
 
             return res.status(200).json('Post has been deleted');

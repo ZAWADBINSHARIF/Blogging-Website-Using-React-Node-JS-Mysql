@@ -8,6 +8,12 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const { search } = useLocation();
 
+  function getText(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+
+    return doc.body.textContent;
+  }
+
   useEffect(() => {
     async function fetchPosts() {
       try {
@@ -35,7 +41,7 @@ const Home = () => {
               <Link className="link" to={`/post/${post.id}`}>
                 <h1>{post.title}</h1>
               </Link>
-              <p>{post.desc}</p>
+              <p>{getText(post.desc)}</p>
               <Link to={`/post/${post.id}`}>
                 <button type="button">
                   Read More

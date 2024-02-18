@@ -21,6 +21,12 @@ const Single = () => {
 
   const postID = pathname.split('/')[2];
 
+  function getText(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html')
+
+    return doc.body.textContent
+  }
+
   const handleDeletePost = async () => {
     try {
       await axios.delete(`/post/${postID}`);
@@ -68,7 +74,7 @@ const Single = () => {
 
         <h1>{post.title}</h1>
 
-        {post.desc}
+        {getText(post.desc)}
 
       </article>
 

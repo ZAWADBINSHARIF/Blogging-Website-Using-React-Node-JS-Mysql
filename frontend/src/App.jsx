@@ -1,22 +1,35 @@
 // external import
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 // internal import
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Single from './pages/Single'
-import Write from './pages/Write'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Single from './pages/Single';
+import Write from './pages/Write';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
-const Layout = () => (
-  <>
-    <Navbar />
-    <Outlet />
-    <Footer />
-  </>
-)
+const Layout = () => {
+
+  function checkLogin() {
+    // try {
+    //   await axios.
+    // } catch (error) {
+    //   console.log(error)
+    // }
+  }
+
+  checkLogin();
+
+  return (
+    <>
+      <Navbar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
 
 const router = createBrowserRouter([
   {
@@ -45,7 +58,7 @@ const router = createBrowserRouter([
     path: '/register',
     element: <Register />
   }
-])
+]);
 
 const App = () => {
   return (
@@ -54,6 +67,6 @@ const App = () => {
         <RouterProvider router={router} />
       </div>
     </div>
-  )
-}
-export default App
+  );
+};
+export default App;
