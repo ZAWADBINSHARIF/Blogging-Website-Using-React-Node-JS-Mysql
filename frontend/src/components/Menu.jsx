@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const Menu = ({ cat }) => {
 
+    const API = import.meta.env.VITE_API;
     const [posts, setPosts] = useState([]);
     const { pathname } = useLocation();
 
@@ -24,33 +25,6 @@ const Menu = ({ cat }) => {
 
     }, [cat]);
 
-    // const posts = [
-    //     {
-    //         id: 1,
-    //         title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    //         desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    //         img: "https://images.pexels.com/photos/7008010/pexels-photo-7008010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    //     },
-    //     {
-    //         id: 2,
-    //         title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    //         desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    //         img: "https://images.pexels.com/photos/6489663/pexels-photo-6489663.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    //     },
-    //     {
-    //         id: 3,
-    //         title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    //         desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    //         img: "https://images.pexels.com/photos/4230630/pexels-photo-4230630.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    //     },
-    //     {
-    //         id: 4,
-    //         title: "Lorem ipsum dolor sit amet consectetur adipisicing elit",
-    //         desc: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. A possimus excepturi aliquid nihil cumque ipsam facere aperiam at! Ea dolorem ratione sit debitis deserunt repellendus numquam ab vel perspiciatis corporis!",
-    //         img: "https://images.pexels.com/photos/6157049/pexels-photo-6157049.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    //     }
-    // ]
-
     return (
         <menu>
 
@@ -61,7 +35,7 @@ const Menu = ({ cat }) => {
                 if (post.id != postID) {
                     return (
                         <div className="post" key={post.id}>
-                            <img src={post.img} alt="Post img" />
+                            <img src={API + '/' + 'blog_post_img' + '/' + post.img} alt="Post img" />
                             <h2>{post.title}</h2>
                             <Link to={`/post/${post.id}`}>
                                 <button type="button">

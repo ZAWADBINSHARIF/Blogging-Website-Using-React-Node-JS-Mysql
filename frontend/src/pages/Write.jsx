@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
@@ -7,11 +8,14 @@ import moment from 'moment';
 
 const Write = () => {
 
+  const state = useLocation().state;
+  const navigate = useNavigate();
+
   const [post, setPost] = useState({
-    title: '',
-    desc: '',
-    img: '',
-    category: null
+    title: state?.title || '',
+    desc: state?.desc || '',
+    img: state?.post_img || '',
+    category: state?.category || null
   });
 
   function handleChange({ key, value }) {
@@ -23,25 +27,44 @@ const Write = () => {
     e.preventDefault();
 
     const formData = new FormData();
-
     if (post.title && post.desc && post.img) {
 
-      const date = moment().format("YYYY-MM-DD");
+      const date = moment().format("YYYY-MM-DD HH:mm:ss");
 
       formData.append('title', post.title);
       formData.append('desc', post.desc);
       formData.append('img', post.img);
       formData.append('category', post.category);
       formData.append('date', date);
-
       try {
-        const response = await axios.post('/post', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
 
-        console.log(response.data);
+        if (state) {
+
+          formData.append('oldImgName', state.post_img);
+
+          await axios.put(`/post/${state.id}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          toast.success("Article has been updated");
+          navigate('/post/' + state.id);
+        } else {
+          await axios.post('/post', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+
+          setPost({
+            title: '',
+            desc: '',
+            img: '',
+            category: null
+          });
+          toast.success("Article has been posted");
+          navigate('/');
+        }
 
       } catch (error) {
         toast.error(error.response.data);
@@ -49,11 +72,9 @@ const Write = () => {
       }
 
     } else {
-      toast.warning("Fill the Title, Description and Image")
+      toast.warning("Fill the Title, Description and Image");
     }
   }
-
-  console.log(post);
 
   return (
     <div className="add">
@@ -77,7 +98,10 @@ const Write = () => {
 
           <div className="button">
             <button>Save as a draft</button>
-            <button onClick={(e) => handlePost(e)}>Update</button>
+            {state ?
+              <button onClick={(e) => handlePost(e)}>Update</button> :
+              <button onClick={(e) => handlePost(e)}>Create Post</button>
+            }
           </div>
 
         </div>

@@ -7,6 +7,7 @@ const Home = () => {
 
   const [posts, setPosts] = useState([]);
   const { search } = useLocation();
+  const API = import.meta.env.VITE_API;
 
   function getText(html) {
     const doc = new DOMParser().parseFromString(html, 'text/html');
@@ -35,7 +36,7 @@ const Home = () => {
         {posts.map(post => (
           <div className="post" key={post.id}>
             <div className="img">
-              <img src={post.img} alt={post.id + " " + post.title} />
+              <img src={`${API}/blog_post_img/${post?.img}`} alt={post.id + " " + post.title} />
             </div>
             <div className="content">
               <Link className="link" to={`/post/${post.id}`}>

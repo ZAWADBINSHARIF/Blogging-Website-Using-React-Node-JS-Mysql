@@ -12,22 +12,14 @@ import Footer from './components/Footer';
 
 const Layout = () => {
 
-  function checkLogin() {
-    // try {
-    //   await axios.
-    // } catch (error) {
-    //   console.log(error)
-    // }
-  }
-
-  checkLogin();
-
   return (
-    <>
-      <Navbar />
-      <Outlet />
-      <Footer />
-    </>
+    <div className='Layout'>
+      <div className="container">
+        <Navbar />
+        <Outlet />
+        <Footer />
+      </div>
+    </div>
   );
 };
 
@@ -63,9 +55,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <div className="App">
-      <div className="container">
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
     </div>
   );
 };

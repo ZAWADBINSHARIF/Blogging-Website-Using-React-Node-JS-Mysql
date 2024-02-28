@@ -1,17 +1,17 @@
 // external import
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { ToastContainer } from 'react-toastify'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { ToastContainer } from 'react-toastify';
 
 // internal import
-import App from './App.jsx'
-import axios from 'axios'
-import './main.scss'
+import App from './App.jsx';
+import axios from 'axios';
+import './main.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { AuthContextProvider } from './context/authContext.jsx'
+import { AuthContextProvider } from './context/authContext.jsx';
 
-const baseUrl = '/api'
-axios.defaults.baseURL = baseUrl
+const baseUrl = '/api';
+axios.defaults.baseURL = baseUrl;
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -32,4 +32,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </AuthContextProvider>
 
   </React.StrictMode>,
-)
+);

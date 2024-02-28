@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import axios from 'axios';
+import DOMPurify from "dompurify";
 
 // internal import
 import Edit from '../assets/img/edit.png';
@@ -20,11 +21,12 @@ const Single = () => {
   const navigate = useNavigate();
 
   const postID = pathname.split('/')[2];
+  const API = import.meta.env.VITE_API;
 
   function getText(html) {
-    const doc = new DOMParser().parseFromString(html, 'text/html')
+    const doc = new DOMParser().parseFromString(html, 'text/html');
 
-    return doc.body.textContent
+    return doc.body.textContent;
   }
 
   const handleDeletePost = async () => {
@@ -55,7 +57,7 @@ const Single = () => {
   return (
     <div className="single">
       <article>
-        <img src={post?.post_img} alt="article image" />
+        <img src={`${API}/blog_post_img/${post?.post_img}`} alt="article image" />
         <div className="user">
           {post?.user_img && <img src={post?.user_img} alt="Profile Picture" />}
           <div className="info">
@@ -65,7 +67,7 @@ const Single = () => {
           {currentUser?.username === post.username
             &&
             <div className="edit">
-              <Link to={`/write?edit=2`}>
+              <Link to={`/write?edit=2`} state={post}>
                 <img src={Edit} alt="Edit Button" />
               </Link>
               <img src={Delete} alt="Delete Button" onClick={handleDeletePost} />
@@ -74,7 +76,14 @@ const Single = () => {
 
         <h1>{post.title}</h1>
 
-        {getText(post.desc)}
+        <p
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(post.desc),
+          }}
+        >
+
+        </p>
+
 
       </article>
 
