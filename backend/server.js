@@ -8,6 +8,7 @@ import path from 'path';
 import dbConnection from './config/dbConnection.js';
 import authRoute from './routers/authRoute.js';
 import postRoute from './routers/postRoute.js';
+import { checkCookie } from './middlewares/checkLogin.js';
 
 // for getting variables of env file
 dotenv.config();
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'backend', 'public', 'uploads')));
 
 // Routers
 app.get('/', (req, res) => res.send('<h1>Server is running 🚀</h1>'));
+app.use(checkCookie)
 app.use('/api', postRoute);
 app.use('/api/auth', authRoute);
 

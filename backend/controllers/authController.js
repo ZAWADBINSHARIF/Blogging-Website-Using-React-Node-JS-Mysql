@@ -29,7 +29,7 @@ export function loginUser(req, res) {
 
         res.cookie('access_token', token, {
             httpOnly: true,
-            // maxAge: 24 * 60 * 60 * 1000 // * 1 day
+            maxAge: 24 * 60 * 60 * 1000 // * 1 day
         }).status(200).json({...data[0], password: ''})
     })
 }
